@@ -6,13 +6,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,12 +39,13 @@ import com.example.android.instagramui.ui.theme.InstagramUITheme
 
 @Composable
 fun ProfileScreen() {
-    Box(modifier = Modifier.fillMaxSize()){
-        Column() {
+        Column {
+            TopBar(name = "Nwachukwu Chigozie")
+            Spacer(modifier = Modifier.height(4.dp))
             ProfileSection()
         }
     }
-}
+
 
 @Composable
 fun ProfileSection(modifier: Modifier = Modifier) {
@@ -55,36 +60,42 @@ fun ProfileSection(modifier: Modifier = Modifier) {
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(
     name: String,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround,
-        modifier = modifier.fillMaxWidth()
-    ) {
-        Icon(imageVector = Icons.Default.ArrowBack,
-            contentDescription = "Back",
-            tint = Color.Black,
-            modifier = Modifier.size(24.dp))
-        Text(text = name,
-            overflow = TextOverflow.Ellipsis,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        )
-        Icon(painter = painterResource(id = R.drawable.ic_bell),
-            contentDescription = "Bell",
-            tint = Color.Black,
-            modifier = Modifier.size(24.dp))
+    CenterAlignedTopAppBar(title = {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround,
+            modifier = modifier.fillMaxWidth()
+        ) {
+            Icon(imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+                tint = Color.Black,
+                modifier = Modifier.size(24.dp))
+            Text(text = name,
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+            Icon(painter = painterResource(id = R.drawable.ic_bell),
+                contentDescription = "Bell",
+                tint = Color.Black,
+                modifier = Modifier.size(24.dp))
 
-        Icon(painter = painterResource(id = R.drawable.ic_dotmenu),
-            contentDescription = "Back",
-            tint = Color.Black,
-            modifier = Modifier.size(24.dp))
+            Icon(painter = painterResource(id = R.drawable.ic_dotmenu),
+                contentDescription = "Back",
+                tint = Color.Black,
+                modifier = Modifier.size(24.dp))
 
-    }
+        }
+    })
+
+
+
 
 }
 
