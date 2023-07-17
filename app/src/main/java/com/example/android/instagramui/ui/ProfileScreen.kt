@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,7 +66,7 @@ fun TopBar(
             Icon(imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Back",
                 tint = Color.Black,
-                modifier = Modifier.size(24.dp))
+                modifier = Modifier.size(20.dp))
             Text(text = name,
                 overflow = TextOverflow.Ellipsis,
                 fontWeight = FontWeight.Bold,
@@ -73,12 +75,12 @@ fun TopBar(
             Icon(painter = painterResource(id = R.drawable.ic_bell),
                 contentDescription = "Bell",
                 tint = Color.Black,
-                modifier = Modifier.size(24.dp))
+                modifier = Modifier.size(20.dp))
 
             Icon(painter = painterResource(id = R.drawable.ic_dotmenu),
                 contentDescription = "Back",
                 tint = Color.Black,
-                modifier = Modifier.size(24.dp))
+                modifier = Modifier.size(16.dp))
 
         }
     })
@@ -98,6 +100,15 @@ fun ProfileSection(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.width(16.dp))
         StatSection(modifier = Modifier.weight(7f))
     }
+    ProfileDescription(
+        displayName = "Programming Mentor",
+        description = "10 years of coding experience\n" +
+                "Want me to make your app? Send me an email!\n" +
+                "Android tutorials? Subscribe to my channel!",
+        url = "https://youtube.com/c/philippLackner",
+        followedBy = listOf("codinginflow", "miakhalifa"),
+        otherCount = 17
+    )
 
 }
 
@@ -141,17 +152,82 @@ fun ProfileStat(
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+        modifier = modifier
     ) {
         Text(
             text = numberText,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp)
+            fontSize = 18.sp)
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = text,
+            fontSize = 14.sp
             )
     }
+}
+
+@Composable
+fun ProfileDescription(
+    displayName: String,
+    description: String,
+    url:String,
+    followedBy: List<String>,
+    otherCount: Int,
+    modifier: Modifier = Modifier
+) {
+    val letterSpacing = 0.5.sp
+    val lineHeight = 20.sp
+
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .padding(horizontal = 20.dp)) {
+        Text(
+            text = displayName,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = letterSpacing,
+            lineHeight = lineHeight)
+
+        Text(
+            text = description,
+            letterSpacing = letterSpacing,
+            lineHeight = lineHeight)
+
+        Text(
+            text = url,
+            color = Color(0xFF3D3D91),
+            letterSpacing = letterSpacing,
+            lineHeight = lineHeight)
+
+        if (followedBy.isNotEmpty()) {
+            Text(
+                text = buildAnnotatedString {
+                    val boldStyle = SpanStyle(
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold
+                    )
+                    append("Followed by ")
+                    followedBy.forEachIndexed { index, name ->
+                        pushStyle(boldStyle)
+                        append(name)
+                        pop()
+                        if (index < followedBy.size -1) {
+                            append(", ")
+                        }
+                    }
+                    if (otherCount > 2) {
+                        append(" and ")
+                        pushStyle(boldStyle)
+                        append("$otherCount others")
+                    }
+                },
+                letterSpacing = letterSpacing,
+                lineHeight = lineHeight
+            )
+        }
+    }
+
+
+
 }
 
 @Preview(showBackground = true)
