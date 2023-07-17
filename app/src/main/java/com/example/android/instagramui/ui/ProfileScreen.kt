@@ -3,15 +3,15 @@ package com.example.android.instagramui.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -44,21 +44,10 @@ fun ProfileScreen() {
             Spacer(modifier = Modifier.height(4.dp))
             ProfileSection()
         }
-    }
-
-
-@Composable
-fun ProfileSection(modifier: Modifier = Modifier) {
-    Row(modifier = modifier
-        .fillMaxWidth()
-        .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically) {
-        ProfilePicture(painter = painterResource(id = R.drawable.profile_picture))
-        StatSection()
-    }
-
 }
+
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,47 +82,75 @@ fun TopBar(
 
         }
     })
+}
 
-
-
+@Composable
+fun ProfileSection(modifier: Modifier = Modifier) {
+    Row(verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp)) {
+        RoundImage(
+            painter = painterResource(id = R.drawable.profile_image),
+            modifier = Modifier
+                .size(100.dp)
+                .weight(3f))
+        Spacer(modifier = Modifier.width(16.dp))
+        StatSection(modifier = Modifier.weight(7f))
+    }
 
 }
 
 @Composable
-fun ProfilePicture(modifier: Modifier = Modifier,painter: Painter) {
-    Box(modifier = modifier.size(40.dp)) {
+fun RoundImage(
+    painter: Painter,
+    modifier: Modifier = Modifier
+    ) {
         Image(
             painter = painter,
             contentDescription = "profile picture",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .clip(CircleShape)
-                .size(40.dp)
+            modifier = modifier
+                .aspectRatio(1f, matchHeightConstraintsFirst = true)
                 .border(
                     width = 1.dp,
                     color = Color.LightGray,
                     shape = CircleShape
-                ))
+                )
+                .padding(3.dp)
+                .clip(CircleShape),
+            contentScale = ContentScale.FillBounds)
     }
 
-}
 
 @Composable
 fun StatSection(modifier: Modifier = Modifier) {
     Row(modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically) {
-        Stat(number = "601", statName = "Posts")
-        Stat(number = "99.8k", statName = "Followers")
-        Stat(number = "72", statName = "Following")
+        ProfileStat(numberText = "601", text = "Posts")
+        ProfileStat(numberText = "99.8k", text = "Followers")
+        ProfileStat(numberText = "72", text = "Following")
     }
 }
 
 @Composable
-fun Stat(number: String, statName: String) {
-    Column() {
-        Text(text = number)
-        Text(text = statName)
+fun ProfileStat(
+    numberText: String,
+    text: String,
+    modifier: Modifier = Modifier) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+    ) {
+        Text(
+            text = numberText,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = text,
+            )
     }
 }
 
