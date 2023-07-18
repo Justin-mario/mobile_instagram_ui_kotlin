@@ -78,12 +78,12 @@ fun ProfileScreen() {
                 selectedTabIndex = it
             }
 
-//            when(selectedTabIndex) {
-//                0 ->  PostSection(
-//                    posts = postSectionImages,
-//                    modifier = Modifier.fillMaxWidth()
-//                )
-//            }
+            when(selectedTabIndex) {
+                0 ->  PostSection(
+                    posts = postSectionImages,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
 }
 
@@ -405,29 +405,29 @@ fun PostTabView(
         }
         }
 }
-//
-//@Composable
-//fun PostSection(
-//    posts: List<Int>,
-//    modifier: Modifier = Modifier
-//) {
-//    LazyVerticalGrid(
-//        columns = GridCells.Fixed(3),
-//        modifier = modifier.scale(1.01f)) {
-//        items(posts.size) {
-//            Image(
-//                painter = painterResource(id = posts[it]),
-//                contentDescription = null,
-//                contentScale = ContentScale.Crop,
-//                modifier = Modifier
-//                    .aspectRatio(1f)
-//                    .border(
-//                        width = 1.dp,
-//                        color = Color.White
-//                    ))
-//        }
-//    }
-//}
+
+@Composable
+fun PostSection(
+    posts: List<Int>,
+    modifier: Modifier = Modifier
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        modifier = modifier.scale(1.01f)) {
+        items(posts.size) {
+            Image(
+                painter = painterResource(id = posts[it]),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .aspectRatio(1f)
+                    .border(
+                        width = 1.dp,
+                        color = Color.White
+                    ))
+        }
+    }
+}
 
 
 @Preview(showBackground = true)
